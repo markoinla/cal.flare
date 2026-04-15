@@ -10,7 +10,7 @@ import { FilterSearchField } from "@calcom/ui/components/form";
 import { AnimatedPopover } from "@calcom/ui/components/popover";
 import { Tooltip } from "@calcom/ui/components/tooltip";
 import { LayersIcon, UserIcon } from "@coss/ui/icons";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { InputHTMLAttributes, ReactNode } from "react";
 import { forwardRef, useState } from "react";
 

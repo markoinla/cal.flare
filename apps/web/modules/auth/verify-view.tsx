@@ -10,7 +10,7 @@ import { showToast } from "@calcom/ui/components/toast";
 import { MailOpenIcon, TriangleAlertIcon } from "@coss/ui/icons";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/auth/client";
 import { useEffect, useRef, useState } from "react";
 import z from "zod";
 

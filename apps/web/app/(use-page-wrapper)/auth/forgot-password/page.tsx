@@ -1,6 +1,6 @@
 import type { PageProps as ServerPageProps } from "app/_types";
 import { _generateMetadata } from "app/_utils";
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken } from "@calcom/auth/client";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 

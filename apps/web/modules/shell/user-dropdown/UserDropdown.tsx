@@ -26,7 +26,7 @@ import {
 } from "@coss/ui/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut } from "@calcom/auth/client";
 import type { MouseEvent } from "react";
 import { useEffect, useState } from "react";
 

@@ -19,7 +19,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { dir } from "i18next";
 import type { AppProps as NextAppProps, AppProps as NextJsAppProps } from "next/app";
 import type { Session } from "next-auth";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { appWithTranslation } from "next-i18next";
 import type { SSRConfig } from "next-i18next/dist/types/types";
 import { ThemeProvider } from "next-themes";

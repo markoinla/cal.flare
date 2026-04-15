@@ -1,6 +1,6 @@
 import { WEBSITE_URL } from "@calcom/lib/constants";
 import { localeOptions } from "@calcom/lib/i18n";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { EventSetupTabProps } from "./EventSetupTab";
 import { EventSetupTab } from "./EventSetupTab";
 

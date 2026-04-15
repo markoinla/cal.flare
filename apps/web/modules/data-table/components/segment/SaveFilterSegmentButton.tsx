@@ -13,7 +13,7 @@ import {
 import { Form, Input, Label, Select, Switch } from "@calcom/ui/components/form";
 import { RadioField, RadioGroup } from "@calcom/ui/components/radio";
 import { showToast } from "@calcom/ui/components/toast";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

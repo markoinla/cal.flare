@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 

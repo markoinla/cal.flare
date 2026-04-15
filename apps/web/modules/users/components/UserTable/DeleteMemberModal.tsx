@@ -3,7 +3,7 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { trpc } from "@calcom/trpc/react";
 import { ConfirmationDialogContent } from "@calcom/ui/components/dialog";
 import { showToast } from "@calcom/ui/components/toast";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { Dispatch } from "react";
 import type { UserTableAction, UserTableState } from "./types";
 

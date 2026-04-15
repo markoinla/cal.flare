@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
-import type { SessionContextValue } from "next-auth/react";
+import type { SessionContextValue } from "@calcom/auth/client";
 import { describe, expect, it, vi } from "vitest";
 
 import AdminPasswordBanner from "./AdminPasswordBanner";

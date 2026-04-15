@@ -14,7 +14,7 @@ import {
 } from "@calcom/ui/components/dropdown";
 import { showToast } from "@calcom/ui/components/toast";
 import { Tooltip } from "@calcom/ui/components/tooltip";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { UserTableAction, UserTableUser } from "./types";
 
 export function TableActions({

@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { FC } from "react";
 import { Fragment } from "react";
 

@@ -6,7 +6,7 @@ import { Button } from "@calcom/ui/components/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader } from "@calcom/ui/components/dialog";
 import { Form, TextField } from "@calcom/ui/components/form";
 import { showToast } from "@calcom/ui/components/toast";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useForm } from "react-hook-form";
 import { useDataTable } from "~/data-table/hooks";
 

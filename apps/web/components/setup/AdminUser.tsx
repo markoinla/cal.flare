@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import classNames from "classnames";
-import { signIn } from "next-auth/react";
+import { signIn } from "@calcom/auth/client";
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";

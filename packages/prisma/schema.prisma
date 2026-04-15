@@ -406,6 +406,10 @@ model User {
   /// @zod.import(["import { emailSchema } from '../../zod-utils'"]).custom.use(emailSchema)
   email               String
   emailVerified       DateTime?
+  /// better-auth-only bookkeeping. Source of truth remains emailVerified (DateTime).
+  emailVerifiedBool   Boolean              @default(false)
+  /// Added for better-auth; Prisma auto-updates on User writes.
+  updatedAt           DateTime             @default(now()) @updatedAt
   password            UserPassword?
   bio                 String?
   avatarUrl           String?
@@ -1216,19 +1220,23 @@ model HashedLink {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            Int
-  type              String
-  provider          String
-  providerAccountId String
-  providerEmail     String?
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  id                    String    @id @default(cuid())
+  userId                Int
+  type                  String
+  provider              String
+  providerAccountId     String
+  providerEmail         String?
+  refresh_token         String?   @db.Text
+  access_token          String?   @db.Text
+  expires_at            Int?
+  token_type            String?
+  scope                 String?
+  id_token              String?   @db.Text
+  session_state         String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @default(now()) @updatedAt
 
   user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -1238,13 +1246,23 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+  id           String    @id @default(cuid())
+  /// Legacy next-auth column. Nullable because better-auth writes to `token` instead.
+  /// Kept for coexistence during the migration cutover.
+  sessionToken String?   @unique
+  token        String?   @unique
   userId       Int
-  expires      DateTime
-  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Legacy next-auth column. Kept nullable for the same coexistence reason.
+  expires      DateTime?
+  expiresAt    DateTime?
+  ipAddress    String?
+  userAgent    String?   @db.Text
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
+  user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([token])
 }
 
 enum AppCategories {

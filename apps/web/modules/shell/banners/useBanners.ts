@@ -2,7 +2,7 @@
 
 import { TOP_BANNER_HEIGHT } from "@calcom/lib/constants";
 import { trpc } from "@calcom/trpc/react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useMemo } from "react";
 import type { AllBannerProps } from "./LayoutBanner";
 

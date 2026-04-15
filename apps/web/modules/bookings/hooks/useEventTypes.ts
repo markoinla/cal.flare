@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useMemo } from "react";
 
 import type { FacetedValue } from "@calcom/features/data-table";

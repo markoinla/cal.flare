@@ -23,7 +23,7 @@ import type { getServerSideProps } from "@server/lib/auth/login/getServerSidePro
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, signInCredentials } from "@calcom/auth/client";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -153,21 +153,24 @@ export default function Login({
   const onSubmit = async (values: LoginValues) => {
     setErrorMessage(null);
     // telemetry.event(telemetryEventTypes.login, collectPageParameters());
-    const res = await signIn<"credentials">("credentials", {
-      ...values,
-      callbackUrl,
-      redirect: false,
-    });
+    const res = await signInCredentials(
+      {
+        email: values.email,
+        password: values.password,
+        totpCode: values.totpCode || undefined,
+        backupCode: values.backupCode || undefined,
+      },
+      { callbackUrl }
+    );
     if (!res) setErrorMessage(errorMessages[ErrorCode.InternalServerError]);
-    // we're logged in! let's do a hard refresh to the desired url
-    else if (!res.error) {
+    else if (res.ok) {
       setLastUsed("credentials");
       router.push(callbackUrl);
     } else if (res.error === ErrorCode.SecondFactorRequired) setTwoFactorRequired(true);
     else if (res.error === ErrorCode.IncorrectBackupCode) setErrorMessage(t("incorrect_backup_code"));
     else if (res.error === ErrorCode.MissingBackupCodes) setErrorMessage(t("missing_backup_codes"));
     // fallback if error not found
-    else setErrorMessage(errorMessages[res.error] || t("something_went_wrong"));
+    else setErrorMessage(errorMessages[res.error ?? ""] || t("something_went_wrong"));
   };
 
   const showSocialLogin = isGoogleLoginEnabled || isOutlookLoginEnabled;

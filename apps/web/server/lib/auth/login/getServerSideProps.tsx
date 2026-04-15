@@ -6,7 +6,7 @@ import prisma from "@calcom/prisma";
 import { IS_GOOGLE_LOGIN_ENABLED } from "@server/lib/constants";
 import { jwtVerify } from "jose";
 import type { GetServerSidePropsContext } from "next";
-import { getCsrfToken } from "next-auth/react";
+import { getCsrfToken } from "@calcom/auth/client";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { req, query } = context;

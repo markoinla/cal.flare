@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
 import type { NextPageContext } from "next";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "@calcom/auth/client";
 import React from "react";
 import CacheProvider from "react-inlinesvg/provider";
 
@@ -17,7 +17,6 @@ function MyApp(props: AppProps) {
   return (
     <SessionProvider session={pageProps.session ?? undefined}>
       <WebPushProvider>
-        {/* @ts-expect-error FIXME remove this comment when upgrading typescript to v5 */}
         <CacheProvider>
           {Component.PageWrapper ? <Component.PageWrapper {...props} /> : <Component {...pageProps} />}
         </CacheProvider>

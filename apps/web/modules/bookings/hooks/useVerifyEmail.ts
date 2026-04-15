@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useState } from "react";
 
 import { useBookerStore } from "@calcom/features/bookings/Booker/store";

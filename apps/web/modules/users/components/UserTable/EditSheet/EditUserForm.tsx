@@ -19,7 +19,7 @@ import { SheetBody, SheetFooter, SheetHeader, SheetTitle } from "@calcom/ui/comp
 import { showToast } from "@calcom/ui/components/toast";
 import { TimezoneSelect } from "@calcom/web/modules/timezone/components/TimezoneSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { Dispatch } from "react";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";

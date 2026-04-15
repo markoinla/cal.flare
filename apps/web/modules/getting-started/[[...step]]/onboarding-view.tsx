@@ -1,7 +1,7 @@
 "use client";
 
 import type { TFunction } from "i18next";
-import { signOut } from "next-auth/react";
+import { signOut } from "@calcom/auth/client";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense, useTransition } from "react";
 import { Toaster } from "sonner";

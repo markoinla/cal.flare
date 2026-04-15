@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "@calcom/auth/client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 

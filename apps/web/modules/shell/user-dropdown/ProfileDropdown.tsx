@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@calcom/ui/components/dropdown";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "@coss/ui/icons";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useState } from "react";
 
 export function ProfileDropdown() {

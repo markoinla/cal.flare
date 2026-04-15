@@ -19,34 +19,65 @@ class DeploymentRepository {
 }
 
 const log = logger.getSubLogger({ prefix: ["getServerSession"] });
+
 /**
  * Stores the session in memory using the stringified token as the key.
- *
  */
 const CACHE = new LRUCache<string, Session>({ max: 1000 });
 
+const USE_BETTER_AUTH = process.env.AUTH_PROVIDER === "better-auth";
+
 /**
- * This is a slimmed down version of the `getServerSession` function from
- * `next-auth`.
+ * Cal.diy's server-side session reader.
  *
- * Instead of requiring the entire options object for NextAuth, we create
- * a compatible session using information from the incoming token.
+ * Behavior switches on `AUTH_PROVIDER`:
+ *   - default / "next-auth": original JWT-decode path (kept for rollback safety).
+ *   - "better-auth": delegates to `@calcom/auth`'s `auth.api.getSession`.
  *
- * The downside to this is that we won't refresh sessions if the users
- * token has expired (30 days). This should be fine as we call `/auth/session`
- * frequently enough on the client-side to keep the session alive.
+ * The customSession plugin (packages/auth/src/plugins/calcom-session.ts) returns
+ * a shape structurally compatible with the legacy next-auth Session, so downstream
+ * consumers keep working without per-call-site edits.
  */
 export async function getServerSession(options: {
   req: NextApiRequest | GetServerSidePropsContext["req"];
   authOptions?: AuthOptions;
 }) {
+  if (USE_BETTER_AUTH) {
+    return getBetterAuthSession(options.req);
+  }
+  return getNextAuthSession(options);
+}
+
+async function getBetterAuthSession(
+  req: NextApiRequest | GetServerSidePropsContext["req"]
+): Promise<Session | null> {
+  const { auth } = await import("@calcom/auth");
+  const headers = toFetchHeaders(req.headers);
+  const session = await auth.api.getSession({ headers });
+  if (!session || !session.user) return null;
+  return session as unknown as Session;
+}
+
+function toFetchHeaders(headers: NextApiRequest["headers"]): Headers {
+  const h = new Headers();
+  for (const [key, value] of Object.entries(headers)) {
+    if (!value) continue;
+    if (Array.isArray(value)) {
+      for (const v of value) h.append(key, v);
+    } else {
+      h.set(key, value);
+    }
+  }
+  return h;
+}
+
+async function getNextAuthSession(options: {
+  req: NextApiRequest | GetServerSidePropsContext["req"];
+  authOptions?: AuthOptions;
+}): Promise<Session | null> {
   const { req, authOptions: { secret } = {} } = options;
 
-  const token = await getToken({
-    req,
-    secret,
-  });
-
+  const token = await getToken({ req, secret });
   log.debug("Getting server session", safeStringify({ token }));
 
   if (!token || !token.email || !token.sub) {
@@ -55,23 +86,18 @@ export async function getServerSession(options: {
   }
 
   const cachedSession = CACHE.get(JSON.stringify(token));
-
   if (cachedSession) {
     log.debug("Returning cached session", safeStringify(cachedSession));
     return cachedSession;
   }
 
   const userId = token.sub ? Number(token.sub) : null;
-
   if (!userId || userId <= 0) {
     log.warn("Invalid or missing user ID in token", { sub: token.sub });
     return null;
   }
 
-  const userFromDb = await prisma.user.findUnique({
-    where: { id: userId },
-  });
-
+  const userFromDb = await prisma.user.findUnique({ where: { id: userId } });
   if (!userFromDb) {
     log.warn("No user found for valid token", { userId });
     return null;
@@ -82,10 +108,7 @@ export async function getServerSession(options: {
   const hasValidLicense = await licenseKeyService.checkLicense();
 
   let upId = token.upId;
-
-  if (!upId) {
-    upId = `usr-${userFromDb.id}`;
-  }
+  if (!upId) upId = `usr-${userFromDb.id}`;
 
   if (!upId) {
     log.error("No upId found for session", { userId: userFromDb.id });
@@ -93,10 +116,7 @@ export async function getServerSession(options: {
   }
 
   const userRepository = new UserRepository(prisma);
-  const user = await userRepository.enrichUserWithTheProfile({
-    user: userFromDb,
-    upId,
-  });
+  const user = await userRepository.enrichUserWithTheProfile({ user: userFromDb, upId });
 
   const session: Session = {
     hasValidLicense,
@@ -111,9 +131,7 @@ export async function getServerSession(options: {
       email_verified: user.emailVerified !== null,
       completedOnboarding: user.completedOnboarding,
       role: user.role,
-      image: getUserAvatarUrl({
-        avatarUrl: user.avatarUrl,
-      }),
+      image: getUserAvatarUrl({ avatarUrl: user.avatarUrl }),
       belongsToActiveTeam: token.belongsToActiveTeam,
       org: token.org,
       orgAwareUsername: token.orgAwareUsername,
@@ -126,18 +144,12 @@ export async function getServerSession(options: {
 
   if (token?.impersonatedBy?.id) {
     const impersonatedByUser = await prisma.user.findUnique({
-      where: {
-        id: token.impersonatedBy.id,
-      },
-      select: {
-        id: true,
-        uuid: true,
-        role: true,
-      },
+      where: { id: token.impersonatedBy.id },
+      select: { id: true, uuid: true, role: true },
     });
     if (impersonatedByUser) {
       session.user.impersonatedBy = {
-        id: impersonatedByUser?.id,
+        id: impersonatedByUser.id,
         uuid: impersonatedByUser.uuid,
         role: impersonatedByUser.role,
       };
@@ -145,7 +157,6 @@ export async function getServerSession(options: {
   }
 
   CACHE.set(JSON.stringify(token), session);
-
   log.debug("Returned session", safeStringify(session));
   return session;
 }

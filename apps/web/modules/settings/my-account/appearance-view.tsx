@@ -2,7 +2,7 @@
 
 import { revalidateSettingsAppearance } from "app/(use-page-wrapper)/settings/(settings-layout)/my-account/appearance/actions";
 import { revalidateHasTeamPlan } from "app/cache/membership";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { z } from "zod";

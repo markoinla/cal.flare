@@ -17,7 +17,7 @@ import { revalidateTravelSchedules } from "@calcom/web/app/cache/travelSchedule"
 import { TimezoneSelect } from "@calcom/web/modules/timezone/components/TimezoneSelect";
 import TravelScheduleModal from "@components/settings/TravelScheduleModal";
 import { revalidateSettingsGeneral } from "app/(use-page-wrapper)/settings/(settings-layout)/my-account/general/actions";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 

@@ -7,7 +7,7 @@ import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookingStatus } from "@calcom/prisma/enums";
 import { trpc } from "@calcom/trpc/react";
 import { Calendar } from "@calcom/web/modules/calendars/weeklyview/components/Calendar";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useMemo } from "react";
 
 export const LargeCalendar = ({ extraDays }: { extraDays: number }) => {

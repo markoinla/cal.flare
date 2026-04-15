@@ -1,7 +1,7 @@
 import classNames from "classnames";
 // eslint-disable-next-line no-restricted-imports
 import { noop } from "lodash";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { RefCallback } from "react";
 import { useEffect, useState } from "react";
 

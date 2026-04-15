@@ -10,7 +10,7 @@ import type { AppProps as NextAppProps } from "next/app";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import { usePathname, useSearchParams } from "next/navigation";
 import type { Session } from "next-auth";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { getThemeProviderProps } from "./getThemeProviderProps";

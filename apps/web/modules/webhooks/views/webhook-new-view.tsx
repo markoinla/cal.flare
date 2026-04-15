@@ -9,7 +9,7 @@ import { trpc } from "@calcom/trpc/react";
 import { revalidateWebhooksList } from "@calcom/web/app/(use-page-wrapper)/settings/(settings-layout)/developer/webhooks/(with-loader)/actions";
 import { toastManager } from "@coss/ui/components/toast";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import type { WebhookFormSubmitData } from "../components/WebhookForm";
 import WebhookForm from "../components/WebhookForm";
 import { WebhookVersionCTA } from "../components/WebhookVersionCTA";

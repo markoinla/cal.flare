@@ -1,7 +1,7 @@
 "use client";
 
 import type { ManipulateType as DayjsManipulateType } from "dayjs";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useEffect, useState } from "react";
 
 import dayjs from "@calcom/dayjs";

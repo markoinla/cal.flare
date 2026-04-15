@@ -1,6 +1,6 @@
 import { Collapsible, CollapsibleContent } from "@radix-ui/react-collapsible";
 import classNames from "classnames";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { usePathname, useRouter } from "next/navigation";
 import type { RefObject, Dispatch, SetStateAction } from "react";
 import { createRef, useRef, useState } from "react";

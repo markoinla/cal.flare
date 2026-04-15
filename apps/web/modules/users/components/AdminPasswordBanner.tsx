@@ -1,4 +1,4 @@
-import type { SessionContextValue } from "next-auth/react";
+import type { SessionContextValue } from "@calcom/auth/client";
 import Link from "next/link";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";

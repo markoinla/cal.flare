@@ -14,7 +14,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@coss/ui/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { User as UserAuth } from "next-auth";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { KBarTrigger } from "./Kbar";
 import { Navigation } from "./navigation/Navigation";
 import { useBottomNavItems } from "./useBottomNavItems";

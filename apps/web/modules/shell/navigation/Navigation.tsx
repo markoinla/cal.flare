@@ -1,7 +1,7 @@
 import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
 import { useIsStandalone } from "@calcom/lib/hooks/useIsStandalone";
 import classNames from "@calcom/ui/classNames";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useMemo } from "react";
 import UnconfirmedBookingBadge from "../../bookings/components/UnconfirmedBookingBadge";
 import { KBarTrigger } from "../Kbar";

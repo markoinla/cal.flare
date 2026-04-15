@@ -1,6 +1,6 @@
 import type { Session } from "next-auth";
-import type { GetSessionParams } from "next-auth/react";
-import { getSession as getSessionInner } from "next-auth/react";
+import type { GetSessionParams } from "@calcom/auth/client";
+import { getSession as getSessionInner } from "@calcom/auth/client";
 
 export async function getSession(options: GetSessionParams): Promise<Session | null> {
   const session = await getSessionInner(options);

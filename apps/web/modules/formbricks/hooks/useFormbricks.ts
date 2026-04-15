@@ -1,5 +1,5 @@
 import formbricks from "@formbricks/js";
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useEffect } from "react";
 
 import useMeQuery from "@calcom/trpc/react/hooks/useMeQuery";

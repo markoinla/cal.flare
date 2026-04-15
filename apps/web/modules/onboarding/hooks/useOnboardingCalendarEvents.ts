@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@calcom/auth/client";
 import { useMemo, useEffect } from "react";
 
 import dayjs from "@calcom/dayjs";

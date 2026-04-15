@@ -236,6 +236,15 @@ const nextConfig = (phase: string): NextConfig => {
     experimental: {
       optimizePackageImports: ["@calcom/ui"],
     },
+    allowedDevOrigins: [
+      "home-lab",
+      "home-lab:3000",
+      "home-lab.tail632edc.ts.net",
+      "home-lab.tail632edc.ts.net:3000",
+      "*.ts.net",
+      "100.119.48.107",
+      "100.119.48.107:3000",
+    ],
     productionBrowserSourceMaps: true,
     transpilePackages: [
       "@calcom/app-store",

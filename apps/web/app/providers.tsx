@@ -1,7 +1,7 @@
 "use client";
 
 import { TrpcProvider } from "app/_trpc/trpc-provider";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "@calcom/auth/client";
 import CacheProvider from "react-inlinesvg/provider";
 import { ToastProvider } from "@coss/ui/components/toast";
 
@@ -27,7 +27,6 @@ export function Providers({ isEmbed, children, country }: ProvidersProps) {
         <TrpcProvider>
           <ToastProvider position="bottom-center">
             {!isEmbed && !isBookingPage && <NotificationSoundHandler />}
-            {/* @ts-expect-error FIXME remove this comment when upgrading typescript to v5 */}
             <CacheProvider>
               <WebPushProvider>{children}</WebPushProvider>
             </CacheProvider>
