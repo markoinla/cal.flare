@@ -20,7 +20,7 @@ export const topLevelRouteNamesWhitelistedForRewrite: string[] = [
 export const topLevelRoutesExcludedFromOrgRewrite: string[] = globSync(
   "{pages,app,app/(booking-page-wrapper),app/(use-page-wrapper),app/(use-page-wrapper)/(main-nav)}/**/[^_]*.{tsx,js,ts}",
   {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   }
 )
   .map((filename) =>
